@@ -1,0 +1,4 @@
+# Optional system metrics support (Friday gives a clear instruction when absent).
+psutil>=5.9
+SpeechRecognition>=3.10
+PyAudio>=0.2.14

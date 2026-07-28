@@ -1,0 +1,76 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <meta name="description" content="Friday 2.0 — your private desktop AI assistant.">
+  <title>Friday 2.0 — AI Assistant</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=DM+Mono:wght@400;500&family=Manrope:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="identity-upgrade.css">
+</head>
+<body>
+  <div class="aurora aurora-one"></div><div class="aurora aurora-two"></div>
+  <main class="app-shell" id="app-shell">
+    <header class="topbar">
+      <a class="brand" href="/" aria-label="Friday home">FRIDAY<span>2.0</span></a>
+      <div class="connection" id="connection" aria-live="polite"><i></i><span id="connection-status">Connecting…</span></div>
+      <button class="icon-button" id="new-chat" type="button" aria-label="Start a new conversation" title="New conversation">↻</button>
+    </header>
+
+    <section class="assistant-stage" id="oval" aria-labelledby="assistant-title">
+      <p class="eyebrow">YOUR PERSONAL DESKTOP AI</p>
+      <div class="identity-wrap">
+        <span class="core-aura"></span><span class="orbit orbit-one"></span><span class="orbit orbit-two"></span>
+        <img class="identity-image" src="Assests/Image/friday-core-3d.png" alt="Friday three-dimensional neural core">
+      </div>
+      <h1 id="assistant-title">Friday is <em id="assistant-state">ready</em>.</h1>
+      <p class="stage-message" id="stage-message">Say <strong>“Hello Friday”</strong> to wake me, or type a message below.</p>
+    </section>
+
+    <section class="siri-stage" id="siri-wave" hidden aria-live="polite">
+      <p class="eyebrow">FRIDAY IS LISTENING</p>
+      <div class="siri-mark"><img src="Assests/Image/friday-core-3d.png" alt=""></div>
+      <h1>Hello, I’m <em>Friday.</em></h1>
+      <p class="siri-message" id="siri-message">What would you like me to do?</p>
+      <div class="waveform" aria-label="Voice wave animation" aria-hidden="true">
+        <i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i><i></i>
+      </div>
+      <p class="wake-hint">Listening for your command…</p>
+    </section>
+
+    <section class="chat-view" id="chat-view" aria-live="polite" aria-label="Conversation">
+      <article class="message friday-message"><div class="message-mark">F</div><div><p>FRIDAY <time>NOW</time></p><div class="bubble">Hello. I’m Friday, your personal AI assistant. How can I help?</div></div></article>
+    </section>
+
+    <section class="quick-actions" id="quick-actions" aria-label="Try a command">
+      <button type="button" data-prompt="What is my system status?">System status</button>
+      <button type="button" data-prompt="What is the weather in Mumbai?">Weather in Mumbai</button>
+      <button type="button" data-prompt="Calculate 125 times 8">Calculate</button>
+      <button type="button" data-prompt="Search for AI news">Search the web</button>
+    </section>
+
+    <form class="command-bar" id="chat-form">
+      <label class="sr-only" for="message">Message Friday</label>
+      <input id="message" name="message" autocomplete="off" maxlength="2000" placeholder="Type a command or ask anything…">
+      <button class="voice-button" id="voice-button" type="button" aria-label="Pause or start wake-word listening" aria-pressed="true" title="Wake-word listening is on">
+        <svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 14.7a3.1 3.1 0 0 0 3.1-3.1V5.1a3.1 3.1 0 0 0-6.2 0v6.5a3.1 3.1 0 0 0 3.1 3.1Z"/><path d="M5.8 11.2a6.2 6.2 0 0 0 12.4 0M12 17.4v3.1M8.9 20.5h6.2"/></svg>
+      </button>
+      <button class="send-button" id="send-button" type="submit" aria-label="Send message">↑</button>
+    </form>
+    <footer>
+      <div class="speech-controls">
+        <button id="speech-toggle" type="button" aria-pressed="true">Voice replies: On</button>
+        <label class="voice-picker" for="voice-profile">Voice
+          <select id="voice-profile" aria-label="Friday reply voice"><option value="female">Female</option><option value="male">Male</option></select>
+        </label>
+      </div>
+      <span id="voice-status" aria-live="polite">Starting wake-word listening…</span><span>FRIDAY RUNS LOCALLY</span>
+    </footer>
+  </main>
+  <template id="message-template"><article class="message"><div class="message-mark"></div><div><p><span class="speaker"></span> <time>NOW</time></p><div class="bubble"></div></div></article></template>
+  <script src="main.js"></script>
+</body>
+</html>

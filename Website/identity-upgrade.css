@@ -1,0 +1,47 @@
+/* Friday's transparent, dimensional neural core and voice controls. */
+.identity-wrap {
+  width: 270px;
+  height: 270px;
+  perspective: 800px;
+  isolation: isolate;
+}
+
+.core-aura {
+  position: absolute;
+  inset: 30px;
+  border-radius: 50%;
+  background: conic-gradient(from 210deg, rgba(51, 205, 255, .52), rgba(146, 69, 255, .18), rgba(252, 89, 244, .5), rgba(51, 205, 255, .52));
+  filter: blur(24px);
+  opacity: .65;
+  animation: friday-aura 6s ease-in-out infinite;
+}
+
+.identity-image {
+  width: 225px;
+  height: 225px;
+  object-fit: contain;
+  border-radius: 0;
+  filter: drop-shadow(0 0 12px rgba(77, 199, 255, .8)) drop-shadow(0 0 36px rgba(175, 53, 255, .46));
+  animation: friday-core-float 6s ease-in-out infinite;
+  transform-style: preserve-3d;
+}
+
+.orbit { z-index: 3; pointer-events: none; }
+.orbit-one { width: 260px; height: 90px; animation: friday-orbit-one 18s linear infinite; }
+.orbit-two { width: 245px; height: 72px; animation: friday-orbit-two 12s linear infinite reverse; }
+.siri-mark img { object-fit: contain; }
+
+.speech-controls { display: flex; align-items: center; gap: 12px; }
+.voice-picker { display: flex; align-items: center; gap: 5px; color: var(--muted); }
+.voice-picker select { border: 1px solid var(--line); border-radius: 5px; background: #0b1224; color: var(--ink); font: inherit; padding: 3px 5px; outline: none; }
+.voice-picker select:focus { border-color: var(--blue); }
+
+@keyframes friday-orbit-one { to { transform: rotate(385deg); } }
+@keyframes friday-orbit-two { to { transform: rotate(312deg); } }
+@keyframes friday-core-float {
+  0%, 100% { transform: translateY(0) rotateY(-9deg) rotateX(4deg) scale(1); }
+  50% { transform: translateY(-9px) rotateY(10deg) rotateX(-4deg) scale(1.035); }
+}
+@keyframes friday-aura { 50% { opacity: .95; transform: scale(1.08) rotate(28deg); } }
+
+@media (max-width: 600px) { .speech-controls { gap: 8px; } }
