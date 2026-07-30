@@ -2,7 +2,7 @@ import subprocess
 import webbrowser
 from urllib.parse import quote_plus
 
-from ai.llm import ask_llm, uses_ollama
+from ai.llm import ask_llm
 from core.command_parser import parse_command
 from core.memory import ConversationMemory
 from core.plugin_loader import load_plugins
@@ -102,7 +102,7 @@ def process_command(command, status_callback=None, message_callback=None):
     command_name, extra_data = parse_command(command)
     # Direct commands and common conversation starters work without Ollama.
     is_fast_reply = command_name == "unknown" and get_fast_reply(extra_data) is not None
-    if command_name == "unknown" and not is_fast_reply and uses_ollama():
+    if command_name == "unknown" and not is_fast_reply:
         ensure_ollama_running(status_callback=status_callback)
     reply = route_command(command_name, extra_data)
     if reply == "__EXIT__":
@@ -113,8 +113,7 @@ def process_command(command, status_callback=None, message_callback=None):
 
 def run_assistant(stop_event=None, status_callback=None, message_callback=None):
     """Run the original wake-word voice loop for the desktop application."""
-    if uses_ollama():
-        ensure_ollama_running(status_callback=status_callback)
+    ensure_ollama_running(status_callback=status_callback)
     speak("Friday is ready. Say hello Friday to wake me.")
     while not (stop_event and stop_event.is_set()):
         heard = listen(timeout=3, phrase_time_limit=5, calibrate=False)

@@ -9,7 +9,7 @@ cd /Users/kunal/Documents/Project/Friday2.0
 python3 -m venv .venv
 source .venv/bin/activate
 pip install -r requirements.txt
-ollama pull qwen3.5:4b
+ollama pull qwen3.5:9b
 python3 web_server.py
 ```
 
@@ -21,9 +21,9 @@ Available commands include opening macOS apps, checking CPU/RAM/battery, web sea
 
 Friday automatically responds in the language of the question: English questions receive English replies; Hindi or Hinglish questions receive Hindi/Hinglish replies. The web interface has a persistent Female/Male reply-voice selector beside “Voice replies”; it uses a matching voice installed in the browser/OS, falling back to the closest voice available. The native desktop interface also has a Female/Male voice selector.
 
-For a quick local response, Friday now defaults to `qwen3.5:4b`, a shorter 220-token response limit, reduced context, and keeps the model warm for 30 minutes. Copy `.env.example` to `.env` and choose a larger installed model only when you need it. Greetings such as `Hello` and `How are you?` still answer instantly without waiting for the LLM.
+Friday uses only the locally installed Ollama model `qwen3.5:9b`. It keeps the model warm for 30 minutes, limits ordinary replies to 220 tokens, and never sends questions to a cloud AI provider. Greetings such as `Hello` and `How are you?` still answer instantly without waiting for the LLM.
 
-## API keys and models
+## Weather API key
 
 Copy the example settings, then add future secrets only to `.env` (it is ignored by Git):
 
@@ -31,7 +31,7 @@ Copy the example settings, then add future secrets only to `.env` (it is ignored
 cp .env.example .env
 ```
 
-`OPENWEATHER_API_KEY` enables weather. Friday uses private local Ollama by default. For OpenAI, add `OPENAI_API_KEY`, set `FRIDAY_LLM_PROVIDER=openai`, and optionally choose `FRIDAY_OPENAI_MODEL`. For AIMLAPI, add `AIMLAPI_KEY`, set `FRIDAY_LLM_PROVIDER=aimlapi`, and select an AIMLAPI catalogue model with `FRIDAY_AIMLAPI_MODEL` (the default is `openai/gpt-5-5`). Restart the server after changing `.env`. Do not paste API keys into source files or commit `.env`.
+`OPENWEATHER_API_KEY` is optional and enables weather. All AI questions are handled by your local Ollama installation; no cloud AI key or provider is configured. Restart the server after changing `.env`. Do not paste the weather key into source files or commit `.env`.
 
 The web page starts listening for `Hello Friday` automatically. Your browser will still ask for microphone permission once; after you allow it, Friday re-arms listening after every answer. The microphone button is now only a pause/resume control.
 

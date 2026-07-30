@@ -18,8 +18,8 @@ class FridayWebHandler(SimpleHTTPRequestHandler):
 
     def do_GET(self):
         if self.path == "/api/status":
-            from ai.llm import PROVIDER, active_model
-            self._send_json({"online": True, "name": "Friday 2.0", "provider": PROVIDER, "model": active_model()})
+            from ai.llm import MODEL
+            self._send_json({"online": True, "name": "Friday 2.0", "provider": "ollama", "model": MODEL})
             return
         super().do_GET()
 
@@ -28,23 +28,27 @@ class FridayWebHandler(SimpleHTTPRequestHandler):
             self.send_error(HTTPStatus.NOT_FOUND, "Unknown endpoint")
             return
         try:
-            # Delay optional assistant dependencies until a chat command is sent,
-            # so the interface can still load and report its status after setup.
-            from core.router import process_command
-
-            length = int(self.headers.get("Content-Length", 0))
-            payload = json.loads(self.rfile.read(length))
-            message = str(payload.get("message", "")).strip()
-            if not message:
-                raise ValueError("Please enter a message for Friday.")
-
-            replies = []
-            process_command(message, message_callback=lambda speaker, text: replies.append(str(text)) if speaker == "Friday" else None)
-            self._send_json({"reply": replies[-1] if replies else "I completed that request."})
+            self._extracted_from_do_POST_8()
         except (ValueError, json.JSONDecodeError) as error:
             self._send_json({"error": str(error)}, HTTPStatus.BAD_REQUEST)
         except Exception as error:
             self._send_json({"error": f"Friday could not complete that request: {error}"}, HTTPStatus.INTERNAL_SERVER_ERROR)
+
+    # TODO Rename this here and in `do_POST`
+    def _extracted_from_do_POST_8(self):
+        # Delay optional assistant dependencies until a chat command is sent,
+        # so the interface can still load and report its status after setup.
+        from core.router import process_command
+
+        length = int(self.headers.get("Content-Length", 0))
+        payload = json.loads(self.rfile.read(length))
+        message = str(payload.get("message", "")).strip()
+        if not message:
+            raise ValueError("Please enter a message for Friday.")
+
+        replies = []
+        process_command(message, message_callback=lambda speaker, text: replies.append(str(text)) if speaker == "Friday" else None)
+        self._send_json({"reply": replies[-1] if replies else "I completed that request."})
 
     def _send_json(self, data, status=HTTPStatus.OK):
         encoded = json.dumps(data).encode("utf-8")
