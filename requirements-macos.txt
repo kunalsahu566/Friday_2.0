@@ -1,0 +1,9 @@
+# Runtime requirements for Friday's native macOS background assistant.
+# Kept separate from requirements.txt so the existing web setup is unchanged.
+psutil>=5.9
+SpeechRecognition>=3.10
+PyAudio>=0.2.14
+Pillow>=10.0
+
+# Required only to create the standalone Friday.app bundle.
+pyinstaller>=6.0
